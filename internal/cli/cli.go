@@ -1,4 +1,4 @@
-package main
+package cli
 
 import (
 	"bufio"
@@ -6,9 +6,12 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/user/go-calculate/internal/calculator"
 )
 
-func startCLI() {
+// Start inicia la interfaz de línea de comandos
+func Start() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
@@ -35,10 +38,10 @@ func startCLI() {
 			continue
 		}
 
-		result, err := performCalculation(CalculationRequest{
+		result, err := calculator.Calculate(calculator.Operation{
 			Operation: operation,
-			Num1:     num1,
-			Num2:     num2,
+			Num1:      num1,
+			Num2:      num2,
 		})
 
 		if err != nil {
@@ -49,6 +52,7 @@ func startCLI() {
 	}
 }
 
+// mapOperation convierte símbolos matemáticos a operaciones
 func mapOperation(op string) string {
 	switch op {
 	case "+":

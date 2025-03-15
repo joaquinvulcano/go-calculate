@@ -9,6 +9,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/rs/cors"
+	"github.com/user/go-calculate/internal/api"
+	"github.com/user/go-calculate/internal/cli"
 )
 
 type ctxKey string
@@ -20,7 +22,7 @@ func main() {
 	flag.Parse()
 
 	if *cliMode {
-		startCLI()
+		cli.Start()
 		return
 	}
 
@@ -38,7 +40,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	// Registrar los handlers
-	mux.HandleFunc("/calculate", calculateHandler)
+	mux.HandleFunc("/calculate", api.Handler)
 
 	// Configurar el servidor HTTP
 	server := &http.Server{
